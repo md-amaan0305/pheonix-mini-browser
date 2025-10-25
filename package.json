@@ -1,0 +1,16 @@
+{
+  "name": "pheonix-browser",
+  "version": "1.0.0",
+  "description": "Pheonix Browser: a minimalist Electron-based browser with dark, smooth UI, tabs, and basic navigation.",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "private": true,
+  "productName": "Pheonix Browser",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "^31.0.0"
+  }
+}
