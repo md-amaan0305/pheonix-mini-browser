@@ -12,16 +12,36 @@
     <div id="app">
       <!-- Engine picker overlay (shown on app start until user selects an engine) -->
       <div id="engineOverlay" class="engine-overlay hidden no-drag">
-        <div class="engine-modal">
-          <h2>Select your search engine</h2>
-          <p>We’ll use this for searches on the Pheonix home page this session.</p>
+        <div class="engine-modal flame">
+          <div class="flame-ring" aria-hidden="true"></div>
+          <div class="flame-sparks" aria-hidden="true"></div>
+          <h2>Choose your search engine</h2>
+          <p>Powered by your pick. Pheonix will keep this for this session.</p>
           <div class="engine-grid">
-            <button class="engine-btn" data-engine="google">Google</button>
-            <button class="engine-btn" data-engine="bing">Bing</button>
-            <button class="engine-btn" data-engine="duckduckgo">DuckDuckGo</button>
-            <button class="engine-btn" data-engine="brave">Brave</button>
-            <button class="engine-btn" data-engine="yahoo">Yahoo</button>
-            <button class="engine-btn" data-engine="startpage">Startpage</button>
+            <button class="engine-btn google" data-engine="google">
+              <span class="icon">G</span>
+              <span class="name">Google</span>
+            </button>
+            <button class="engine-btn bing" data-engine="bing">
+              <span class="icon">b</span>
+              <span class="name">Bing</span>
+            </button>
+            <button class="engine-btn duckduckgo" data-engine="duckduckgo">
+              <span class="icon">🦆</span>
+              <span class="name">DuckDuckGo</span>
+            </button>
+            <button class="engine-btn brave" data-engine="brave">
+              <span class="icon">🦁</span>
+              <span class="name">Brave</span>
+            </button>
+            <button class="engine-btn yahoo" data-engine="yahoo">
+              <span class="icon">Y!</span>
+              <span class="name">Yahoo</span>
+            </button>
+            <button class="engine-btn startpage" data-engine="startpage">
+              <span class="icon">S</span>
+              <span class="name">Startpage</span>
+            </button>
           </div>
         </div>
       </div>
