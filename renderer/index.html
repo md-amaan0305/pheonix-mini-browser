@@ -10,6 +10,22 @@
   </head>
   <body>
     <div id="app">
+      <!-- Engine picker overlay (shown on app start until user selects an engine) -->
+      <div id="engineOverlay" class="engine-overlay hidden no-drag">
+        <div class="engine-modal">
+          <h2>Select your search engine</h2>
+          <p>We’ll use this for searches on the Pheonix home page this session.</p>
+          <div class="engine-grid">
+            <button class="engine-btn" data-engine="google">Google</button>
+            <button class="engine-btn" data-engine="bing">Bing</button>
+            <button class="engine-btn" data-engine="duckduckgo">DuckDuckGo</button>
+            <button class="engine-btn" data-engine="brave">Brave</button>
+            <button class="engine-btn" data-engine="yahoo">Yahoo</button>
+            <button class="engine-btn" data-engine="startpage">Startpage</button>
+          </div>
+        </div>
+      </div>
+
       <!-- Top bar with glassmorphism style -->
       <header class="topbar drag">
         <div class="window-space drag"></div>

@@ -6,6 +6,18 @@ const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 
 // Local animated home page (file://.../renderer/home/index.html)
 const defaultHome = new URL('./home/index.html', window.location.href).toString();
+function getSelectedEngine(){
+  return sessionStorage.getItem('mb:engine') || null;
+}
+function setSelectedEngine(engine){
+  sessionStorage.setItem('mb:engine', engine);
+}
+function getHomeUrl(){
+  const engine = getSelectedEngine() || 'google';
+  const u = new URL(defaultHome);
+  u.searchParams.set('engine', engine);
+  return u.toString();
+}
 const appName = 'Pheonix Browser';
 
 const state = {
@@ -83,7 +95,7 @@ function createTab(url){
   const id = 't' + Math.random().toString(36).slice(2);
 
   const webview = document.createElement('webview');
-  webview.setAttribute('src', url || defaultHome);
+  webview.setAttribute('src', url || getHomeUrl());
   webview.setAttribute('partition', 'persist:main');
   webview.setAttribute('allowpopups', '');
   webview.addEventListener('did-start-loading', () => setLoading(true));
@@ -177,7 +189,7 @@ function closeTab(id){
   state.tabs.splice(idx,1);
 
   if (state.tabs.length === 0){
-    createTab(defaultHome);
+    createTab(getHomeUrl());
   } else {
     const next = state.tabs[Math.max(0, idx - 1)];
     setActiveTab(next.id);
@@ -196,7 +208,7 @@ function goForward(){ const t = getActiveTab(); if (t && t.webview.canGoForward(
 function reload(){ const t = getActiveTab(); if (t) t.webview.reload(); }
 
 function bindUI(){
-  $('#btnNewTab').addEventListener('click', () => createTab(defaultHome));
+  $('#btnNewTab').addEventListener('click', () => createTab(getHomeUrl()));
   $('#btnBack').addEventListener('click', goBack);
   $('#btnForward').addEventListener('click', goForward);
   $('#btnReload').addEventListener('click', reload);
@@ -245,7 +257,7 @@ function bindUI(){
 
   // IPC from main menu (reliable even when webview focused)
   const api = window.electronAPI || {};
-  api.onNewTab && api.onNewTab(() => createTab(defaultHome));
+  api.onNewTab && api.onNewTab(() => createTab(getHomeUrl()));
   api.onCloseTab && api.onCloseTab(() => closeTab(state.activeId));
   api.onNavBack && api.onNavBack(goBack);
   api.onNavForward && api.onNavForward(goForward);
@@ -253,10 +265,30 @@ function bindUI(){
   api.onFocusAddress && api.onFocusAddress(() => { $('#addressBar').focus(); $('#addressBar').select(); });
 }
 
+function showEnginePickerThenStart(){
+  const overlay = document.getElementById('engineOverlay');
+  const pick = (engine) => {
+    setSelectedEngine(engine);
+    overlay.classList.add('hidden');
+    // Small deferred open for fade effect
+    setTimeout(() => {
+      createTab(getHomeUrl());
+    }, 120);
+  };
+
+  overlay.classList.remove('hidden');
+  $$('.engine-btn', overlay).forEach(btn => btn.addEventListener('click', () => pick(btn.dataset.engine)));
+}
+
 function boot(){
   bindUI();
   renderBookmarks();
-  createTab(defaultHome);
+  const engine = getSelectedEngine();
+  if (engine){
+    createTab(getHomeUrl());
+  } else {
+    showEnginePickerThenStart();
+  }
   document.title = `New Tab - ${appName}`;
 }
 
