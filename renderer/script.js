@@ -25,6 +25,23 @@ const state = {
   activeId: null
 };
 
+// Theme handling
+function getTheme(){
+  return localStorage.getItem('mb:theme') || (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+}
+function setTheme(theme){
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('mb:theme', theme);
+  const icon = document.getElementById('themeIcon');
+  if (icon){
+    // Simple icon swap: filled circle for dark, hollow for light
+    icon.innerHTML = theme === 'dark'
+      ? '<path d="M12 4a8 8 0 018 8 8 8 0 11-8-8z" fill="currentColor"/>'
+      : '<path d="M12 3a9 9 0 100 18 9 9 0 010-18z" fill="none" stroke="currentColor" stroke-width="2"/>';
+  }
+}
+function toggleTheme(){ setTheme(getTheme() === 'dark' ? 'light' : 'dark'); }
+
 function toUrl(input){
   const trimmed = input.trim();
   if (!trimmed) return defaultHome;
@@ -213,6 +230,8 @@ function bindUI(){
   $('#btnForward').addEventListener('click', goForward);
   $('#btnReload').addEventListener('click', reload);
   $('#btnGoogle').addEventListener('click', () => navigateActive('https://www.google.com'));
+  const themeBtn = $('#btnTheme');
+  if (themeBtn){ themeBtn.addEventListener('click', toggleTheme); }
 
   const address = $('#addressBar');
   address.addEventListener('keydown', (e) => {
@@ -283,6 +302,8 @@ function showEnginePickerThenStart(){
 function boot(){
   bindUI();
   renderBookmarks();
+  // Apply saved theme
+  setTheme(getTheme());
   const engine = getSelectedEngine();
   if (engine){
     createTab(getHomeUrl());

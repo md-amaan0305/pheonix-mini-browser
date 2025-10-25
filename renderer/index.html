@@ -13,8 +13,6 @@
       <!-- Engine picker overlay (shown on app start until user selects an engine) -->
       <div id="engineOverlay" class="engine-overlay hidden no-drag">
         <div class="engine-modal flame">
-          <div class="flame-ring" aria-hidden="true"></div>
-          <div class="flame-sparks" aria-hidden="true"></div>
           <h2>Choose your search engine</h2>
           <p>Powered by your pick. Pheonix will keep this for this session.</p>
           <div class="engine-grid">
@@ -84,6 +82,11 @@
                 </defs>
                 <circle cx="12" cy="12" r="10" fill="url(#ggrad)" opacity="0.18" />
                 <path d="M12 7.5c1.1 0 2 .37 2.7 1.09l-1.1 1.06c-.4-.39-.93-.6-1.6-.6-1.36 0-2.46 1.12-2.46 2.49 0 1.37 1.1 2.49 2.46 2.49.98 0 1.72-.47 2.1-1.26h-2.1v-1.4h3.67c.05.2.08.42.08.68 0 2.08-1.4 3.55-3.74 3.55-2.15 0-3.89-1.77-3.89-4.06 0-2.3 1.74-4.06 3.89-4.06z" fill="currentColor" />
+              </svg>
+            </button>
+            <button id="btnTheme" class="icon-btn" title="Toggle theme">
+              <svg id="themeIcon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 4a8 8 0 018 8 8 8 0 11-8-8z" fill="currentColor"/>
               </svg>
             </button>
           </div>
